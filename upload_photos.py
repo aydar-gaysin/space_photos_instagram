@@ -7,7 +7,7 @@ from instabot import Bot
 DIR_PATH = 'images/'
 
 
-def image_processing():
+def resize_image():
     for file in listdir(DIR_PATH):
         image = Image.open(f'{DIR_PATH}{file}')
         x, y = image.size
@@ -23,7 +23,7 @@ def image_processing():
         image.save(f'{DIR_PATH}{image_name[0]}.jpg', format='JPEG')
 
 
-def pictures_upload():
+def upload_picture():
     load_dotenv()
     ig_username = os.getenv('IG_USERNAME')
     ig_password = os.getenv('IG_PASSWORD')

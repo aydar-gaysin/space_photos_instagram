@@ -8,8 +8,8 @@ DIR_PATH = 'images/'
 
 
 def resize_image():
-    for file in listdir(DIR_PATH):
-        image = Image.open(f'{DIR_PATH}{file}')
+    for image_file in listdir(DIR_PATH):
+        image = Image.open(f'{DIR_PATH}{image_file}')
         x, y = image.size
         if x > y:
             height = (1080 * y) // x
@@ -19,7 +19,7 @@ def resize_image():
         elif y > x:
             width = (1080 * x) // y
             image.thumbnail((width, 1080))
-        image_name = os.path.splitext(file)
+        image_name = os.path.splitext(image_file)
         image.save(f'{DIR_PATH}{image_name[0]}.jpg', format='JPEG')
 
 
@@ -29,8 +29,8 @@ def upload_picture():
     ig_password = os.getenv('IG_PASSWORD')
     bot = Bot()
     bot.login(username=ig_username, password=ig_password)
-    for file in listdir(DIR_PATH):
-        bot.upload_photo(f'{DIR_PATH}{file}')
+    for image_file in listdir(DIR_PATH):
+        bot.upload_photo(f'{DIR_PATH}{image_file}')
         response = bot.api.last_response
         if not response.ok:
             print(bot.api.last_response)

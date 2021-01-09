@@ -17,7 +17,7 @@ def fetch_hubble_photos(image_id):
     urls = api_response['image_files']
     image_url = f"https:{urls[-1]['file_url']}"
 
-    with open(f'{DIR_PATH}{image_id}.{get_image_extension(image_url)}', 'wb') as file:
+    with open(f'{DIR_PATH}{image_id}{get_image_extension(image_url)}', 'wb') as file:
         file.write(requests.get(image_url, verify=False).content)
 
 

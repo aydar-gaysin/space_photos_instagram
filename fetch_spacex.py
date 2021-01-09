@@ -5,13 +5,6 @@ DIR_PATH = 'images/'
 SPACEX_API_URL = 'https://api.spacexdata.com/v4/launches'
 
 
-def ensure_dir():
-    directory = os.path.dirname(DIR_PATH)
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-    return DIR_PATH
-
-
 def fetch_spacex_last_launch():
     address = '/latest'
     full_url = f'{SPACEX_API_URL}{address}'
@@ -21,11 +14,13 @@ def fetch_spacex_last_launch():
     urls_list = api_response['links']['flickr']['original']
 
     for photo_number, photo_url in enumerate(urls_list):
-        with open(f'{ensure_dir()}spacex{photo_number}.jpg', 'wb') as file:
+        with open(f'{DIR_PATH}spacex{photo_number}.jpg', 'wb') as file:
             file.write(requests.get(photo_url).content)
 
 
 def main():
+    directory = os.path.dirname(DIR_PATH)
+    os.makedirs(directory, exist_ok=True)
     fetch_spacex_last_launch()
 
 

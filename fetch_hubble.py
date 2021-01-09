@@ -5,13 +5,6 @@ DIR_PATH = 'images/'
 HUBBLESITE_API_URL = 'http://hubblesite.org/api/v3/image/'
 
 
-def ensure_dir():
-    directory = os.path.dirname(DIR_PATH)
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-    return DIR_PATH
-
-
 def get_image_extension(image_url):
     image_extension = image_url.split(sep='.')
     return image_extension[3]
@@ -24,7 +17,7 @@ def fetch_hubble_photos(id):
     urls_list = api_response['image_files']
     image_url = f"https:{urls_list[-1]['file_url']}"
 
-    with open(f'{ensure_dir()}{id}.{get_image_extension(image_url)}', 'wb') as file:
+    with open(f'{DIR_PATH}{id}.{get_image_extension(image_url)}', 'wb') as file:
         file.write(requests.get(image_url, verify=False).content)
 
 
@@ -46,6 +39,8 @@ def load_hubble_collections():
 
 
 def main():
+    directory = os.path.dirname(DIR_PATH)
+    os.makedirs(directory, exist_ok=True)
     load_hubble_collections()
 
 

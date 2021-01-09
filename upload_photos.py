@@ -31,7 +31,8 @@ def pictures_upload():
     bot.login(username=ig_username, password=ig_password)
     for file in listdir(DIR_PATH):
         bot.upload_photo(f'{DIR_PATH}{file}')
-        if bot.api.last_response.status_code != 200:
+        response = bot.api.last_response
+        if not response.ok:
             print(bot.api.last_response)
 
 

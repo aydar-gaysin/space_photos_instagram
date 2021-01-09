@@ -11,9 +11,9 @@ def fetch_spacex_last_launch():
     response = requests.get(full_url)
     response.raise_for_status()
     api_response = response.json()
-    urls_list = api_response['links']['flickr']['original']
+    urls = api_response['links']['flickr']['original']
 
-    for photo_number, photo_url in enumerate(urls_list):
+    for photo_number, photo_url in enumerate(urls):
         with open(f'{DIR_PATH}spacex{photo_number}.jpg', 'wb') as file:
             file.write(requests.get(photo_url).content)
 

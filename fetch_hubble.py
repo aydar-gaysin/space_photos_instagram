@@ -34,7 +34,7 @@ def load_hubble_collections():
         response = requests.get(f'http://hubblesite.org/api/v3/images/{collection}?page=all')
         response.raise_for_status()
         api_response = response.json()
-        for image_record in enumerate(api_response):
+        for image_record in api_response:
             fetch_hubble_photos(image_record['id'])
 
 

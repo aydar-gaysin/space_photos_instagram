@@ -6,8 +6,8 @@ HUBBLESITE_API_URL = 'http://hubblesite.org/api/v3/image/'
 
 
 def get_image_extension(image_url):
-    image_extension = image_url.split(sep='.')
-    return image_extension[3]
+    image_extension = os.path.splitext(image_url)
+    return image_extension[1]
 
 
 def fetch_hubble_photos(id):

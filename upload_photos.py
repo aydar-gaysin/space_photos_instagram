@@ -19,7 +19,7 @@ def image_processing():
         elif y > x:
             width = (1080 * x) // y
             image.thumbnail((width, 1080))
-        image_name = file.split(sep='.')
+        image_name = os.path.splitext(file)
         image.save(f'{DIR_PATH}{image_name[0]}.jpg', format='JPEG')
 
 

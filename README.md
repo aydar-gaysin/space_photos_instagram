@@ -23,11 +23,11 @@ IG_PASSWORD=<Your Instagram password here>
 
 ### How to use
 
-To resize photo with *upload_photos.py* script start it using *resize* key:
+To resize photo with *upload_photos.py* script start it from CLI using *resize* key:
 ```
 upload_photos.py resize
 ``` 
-To upload photo with *upload_photos.py* script start it using *upload* key:
+To upload photo with *upload_photos.py* script start it from CLI using *upload* key:
 ```
 upload_photos.py upload
 ``` 

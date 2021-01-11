@@ -15,13 +15,18 @@ def fetch_spacex_last_launch():
 
     for photo_number, photo_url in enumerate(urls):
         with open(f'{DIR_PATH}spacex{photo_number}.jpg', 'wb') as file:
-            file.write(requests.get(photo_url).content)
+            get_image = requests.get(photo_url)
+            get_image.raise_for_status()
+            file.write(get_image.content)
 
 
 def main():
     directory = os.path.dirname(DIR_PATH)
     os.makedirs(directory, exist_ok=True)
-    fetch_spacex_last_launch()
+    try:
+        fetch_spacex_last_launch()
+    except requests.exceptions.HTTPError as error:
+        exit('Ошибка:\n{0}'.format(error))
 
 
 if __name__ == "__main__":

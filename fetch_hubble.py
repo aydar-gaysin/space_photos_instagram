@@ -18,17 +18,19 @@ def fetch_hubble_photos(image_id):
     image_url = f"https:{urls[-1]['file_url']}"
 
     with open(f'{DIR_PATH}{image_id}{get_image_extension(image_url)}', 'wb') as file:
-        file.write(requests.get(image_url, verify=False).content)
+        get_image = requests.get(image_url, verify=False)
+        get_image.raise_for_status()
+        file.write(get_image.content)
 
 
 def load_hubble_collections():
     collections = [
-        'holiday_cards',
-        'wallpaper',
         'spacecraft',
         'news',
         'printshop',
         'stsci_gallery',
+        'holiday_cards',
+        'wallpaper',
     ]
     for collection in collections:
         response = requests.get(f'http://hubblesite.org/api/v3/images/{collection}?page=all')
@@ -41,7 +43,10 @@ def load_hubble_collections():
 def main():
     directory = os.path.dirname(DIR_PATH)
     os.makedirs(directory, exist_ok=True)
-    load_hubble_collections()
+    try:
+        load_hubble_collections()
+    except requests.exceptions.HTTPError as error:
+        exit('Ошибка:\n{0}'.format(error))
 
 
 if __name__ == "__main__":

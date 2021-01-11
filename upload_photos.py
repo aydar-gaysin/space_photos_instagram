@@ -3,6 +3,8 @@ import os
 from PIL import Image
 from dotenv import load_dotenv
 from instabot import Bot
+import requests
+import argparse
 
 DIR_PATH = 'images/'
 
@@ -32,13 +34,31 @@ def upload_picture():
     for image_file in listdir(DIR_PATH):
         bot.upload_photo(f'{DIR_PATH}{image_file}')
         response = bot.api.last_response
-        if not response.ok:
-            print(bot.api.last_response)
+        response.raise_for_status()
+
+
+def create_parser():
+    parser = argparse.ArgumentParser(
+        description='Скрипт изменяет размер изображений в папке images для соответствия Instagram aspect ratio, '
+                    ' либо с помощью Instabot загружает изображения из папки images в профиль Instagram'
+    )
+    subparsers = parser.add_subparsers()
+    resize_parser = subparsers.add_parser('resize', help='Введите для изменения размера изображений в папке images'
+                                                         ' для соответствия Instagram aspect ratio')
+    resize_parser.set_defaults(func=resize_image)
+    upload_parser = subparsers.add_parser('upload', help='Введите для загрузки изображений из папки images в профиль'
+                                                         ' Instagram')
+    upload_parser.set_defaults(func=upload_picture)
+    return parser
 
 
 def main():
-    # image_processing()
-    pictures_upload()
+    parser = create_parser()
+    selected_function = parser.parse_args()
+    try:
+        selected_function.func()
+    except requests.exceptions.HTTPError as error:
+        exit('Ошибка:\n{0}'.format(error))
 
 
 if __name__ == "__main__":

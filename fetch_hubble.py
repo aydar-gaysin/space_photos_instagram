@@ -1,5 +1,5 @@
-import requests
 import os
+import requests
 
 DIR_PATH = 'images/'
 HUBBLESITE_API_URL = 'http://hubblesite.org/api/v3/image/'
@@ -32,8 +32,12 @@ def load_hubble_collections():
         'holiday_cards',
         'wallpaper',
     ]
+    parameters = {
+        'page': 'all',
+    }
     for collection in collections:
-        response = requests.get(f'http://hubblesite.org/api/v3/images/{collection}?page=all')
+        response = requests.get(f'http://hubblesite.org/api/v3/images/{collection}', params=parameters)
+        print(response)
         response.raise_for_status()
         api_response = response.json()
         for image_record in api_response:

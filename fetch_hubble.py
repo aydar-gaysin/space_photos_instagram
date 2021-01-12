@@ -1,7 +1,7 @@
 import os
 import requests
 
-DIR_PATH = 'images/'
+DIR_PATH = 'images'
 HUBBLESITE_API_URL = 'http://hubblesite.org/api/v3/image/'
 
 
@@ -17,7 +17,7 @@ def fetch_hubble_photo(image_id):
     urls = api_response['image_files']
     image_url = f"https:{urls[-1]['file_url']}"
 
-    with open(f'{DIR_PATH}{image_id}{get_image_extension(image_url)}', 'wb') as file:
+    with open(os.path.join(DIR_PATH, f'{image_id}{get_image_extension(image_url)}'), 'wb') as file:
         image_response = requests.get(image_url, verify=False)
         image_response.raise_for_status()
         file.write(image_response.content)
@@ -45,7 +45,7 @@ def load_hubble_collections():
 
 
 def main():
-    directory = os.path.dirname(DIR_PATH)
+    directory = os.path.join(DIR_PATH)
     os.makedirs(directory, exist_ok=True)
     try:
         load_hubble_collections()

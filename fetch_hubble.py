@@ -10,7 +10,7 @@ def get_image_extension(image_url):
     return image_extension[1]
 
 
-def fetch_hubble_photos(image_id):
+def fetch_hubble_photo(image_id):
     response = requests.get(f'{HUBBLESITE_API_URL}{image_id}')
     response.raise_for_status()
     api_response = response.json()
@@ -37,7 +37,7 @@ def load_hubble_collections():
         response.raise_for_status()
         api_response = response.json()
         for image_record in api_response:
-            fetch_hubble_photos(image_record['id'])
+            fetch_hubble_photo(image_record['id'])
 
 
 def main():

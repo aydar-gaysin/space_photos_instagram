@@ -18,9 +18,9 @@ def fetch_hubble_photo(image_id):
     image_url = f"https:{urls[-1]['file_url']}"
 
     with open(f'{DIR_PATH}{image_id}{get_image_extension(image_url)}', 'wb') as file:
-        get_image = requests.get(image_url, verify=False)
-        get_image.raise_for_status()
-        file.write(get_image.content)
+        image_response = requests.get(image_url, verify=False)
+        image_response.raise_for_status()
+        file.write(image_response.content)
 
 
 def load_hubble_collections():

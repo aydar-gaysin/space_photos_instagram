@@ -5,19 +5,15 @@ DIR_PATH = 'images'
 HUBBLESITE_API_URL = 'http://hubblesite.org/api/v3/image/'
 
 
-def get_image_extension(image_url):
-    image_extension = os.path.splitext(image_url)
-    return image_extension[1]
-
-
 def fetch_hubble_photo(image_id):
     response = requests.get(f'{HUBBLESITE_API_URL}{image_id}')
     response.raise_for_status()
     api_response = response.json()
     urls = api_response['image_files']
     image_url = f"https:{urls[-1]['file_url']}"
+    url_part, image_extension = os.path.splitext(image_url)
 
-    with open(os.path.join(DIR_PATH, f'{image_id}{get_image_extension(image_url)}'), 'wb') as file:
+    with open(os.path.join(DIR_PATH, f'{image_id}{image_extension}'), 'wb') as file:
         image_response = requests.get(image_url, verify=False)
         image_response.raise_for_status()
         file.write(image_response.content)

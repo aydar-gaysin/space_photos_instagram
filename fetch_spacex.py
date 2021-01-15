@@ -1,5 +1,6 @@
-import requests
 import os
+import requests
+
 
 DIR_PATH = 'images'
 SPACEX_API_URL = 'https://api.spacexdata.com/v4/launches'

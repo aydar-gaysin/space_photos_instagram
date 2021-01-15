@@ -1,11 +1,10 @@
 import argparse
 import os
-
 import requests
 
 from dotenv import load_dotenv
-from os import listdir
 from instabot import Bot
+from os import listdir
 from PIL import Image
 
 

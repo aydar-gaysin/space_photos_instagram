@@ -11,7 +11,7 @@ from PIL import Image
 DIR_PATH = 'images'
 
 
-def resize_image():
+def resize_image(ig_username, ig_password):
     for image_file in listdir(DIR_PATH):
         image = Image.open(os.path.join(DIR_PATH, image_file))
         image.thumbnail((1080, 1080))
@@ -19,10 +19,7 @@ def resize_image():
         image.save(os.path.join(DIR_PATH, f'{image_name[0]}.jpg'), format='JPEG')
 
 
-def upload_picture():
-    load_dotenv()
-    ig_username = os.getenv('IG_USERNAME')
-    ig_password = os.getenv('IG_PASSWORD')
+def upload_picture(ig_username, ig_password):
     bot = Bot()
     bot.login(username=ig_username, password=ig_password)
     for image_file in listdir(DIR_PATH):
@@ -47,10 +44,13 @@ def create_parser():
 
 
 def main():
+    load_dotenv()
+    ig_username = os.getenv('IG_USERNAME')
+    ig_password = os.getenv('IG_PASSWORD')
     parser = create_parser()
     selected_function = parser.parse_args()
     try:
-        selected_function.func()
+        selected_function.func(ig_username, ig_password)
     except requests.exceptions.HTTPError as error:
         exit('Ошибка:\n{0}'.format(error))
 

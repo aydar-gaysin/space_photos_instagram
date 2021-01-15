@@ -11,19 +11,19 @@ from PIL import Image
 DIR_PATH = 'images'
 
 
-def resize_image(ig_username, ig_password):
-    for image_file in listdir(DIR_PATH):
-        image = Image.open(os.path.join(DIR_PATH, image_file))
+def resize_image(ig_username, ig_password, directory):
+    for image_file in listdir(directory):
+        image = Image.open(os.path.join(directory, image_file))
         image.thumbnail((1080, 1080))
         image_name = os.path.splitext(image_file)
-        image.save(os.path.join(DIR_PATH, f'{image_name[0]}.jpg'), format='JPEG')
+        image.save(os.path.join(directory, f'{image_name[0]}.jpg'), format='JPEG')
 
 
-def upload_picture(ig_username, ig_password):
+def upload_picture(ig_username, ig_password, directory):
     bot = Bot()
     bot.login(username=ig_username, password=ig_password)
-    for image_file in listdir(DIR_PATH):
-        bot.upload_photo(os.path.join(DIR_PATH, image_file))
+    for image_file in listdir(directory):
+        bot.upload_photo(os.path.join(directory, image_file))
         response = bot.api.last_response
         response.raise_for_status()
 
@@ -49,8 +49,9 @@ def main():
     ig_password = os.getenv('IG_PASSWORD')
     parser = create_parser()
     selected_function = parser.parse_args()
+    directory = os.path.join(DIR_PATH)
     try:
-        selected_function.func(ig_username, ig_password)
+        selected_function.func(ig_username, ig_password, directory)
     except requests.exceptions.HTTPError as error:
         exit('Ошибка:\n{0}'.format(error))
 

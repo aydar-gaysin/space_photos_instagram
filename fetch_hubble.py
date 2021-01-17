@@ -5,8 +5,8 @@ DIR_PATH = 'images'
 HUBBLESITE_API_URL = 'http://hubblesite.org/api/v3/image/'
 
 
-def fetch_hubble_photo(image_id, directory, hubblesite_api_url):
-    response = requests.get(f'{hubblesite_api_url}{image_id}')
+def fetch_hubble_photo(image_id, directory, HUBBLESITE_API_URL):
+    response = requests.get(f'{HUBBLESITE_API_URL}{image_id}')
     response.raise_for_status()
     api_response = response.json()
     urls = api_response['image_files']
@@ -19,7 +19,7 @@ def fetch_hubble_photo(image_id, directory, hubblesite_api_url):
         file.write(image_response.content)
 
 
-def load_hubble_collections(directory, hubblesite_api_url):
+def load_hubble_collections(directory, HUBBLESITE_API_URL):
     collections = [
         'spacecraft',
         'news',
@@ -37,16 +37,15 @@ def load_hubble_collections(directory, hubblesite_api_url):
         response.raise_for_status()
         api_response = response.json()
         for image_record in api_response:
-            fetch_hubble_photo(image_record['id'], directory, hubblesite_api_url)
+            fetch_hubble_photo(image_record['id'], directory, HUBBLESITE_API_URL)
 
 
 def main():
     directory = os.path.join(DIR_PATH)
     print(directory)
     os.makedirs(directory, exist_ok=True)
-    hubblesite_api_url = HUBBLESITE_API_URL
     try:
-        load_hubble_collections(directory, hubblesite_api_url)
+        load_hubble_collections(directory, HUBBLESITE_API_URL)
     except requests.exceptions.HTTPError as error:
         exit('Ошибка:\n{0}'.format(error))
 

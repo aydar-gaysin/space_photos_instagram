@@ -12,18 +12,18 @@ DIR_PATH = 'images'
 
 
 def resize_image(ig_username, ig_password, directory):
-    for image_file in listdir(directory):
-        image = Image.open(os.path.join(directory, image_file))
+    for filename in listdir(directory):
+        image = Image.open(os.path.join(directory, filename))
         image.thumbnail((1080, 1080))
-        image_name = os.path.splitext(image_file)
-        image.save(os.path.join(directory, f'{image_name[0]}.jpg'), format='JPEG')
+        image_name, filename_extension = os.path.splitext(filename)
+        image.save(os.path.join(directory, f'{image_name}.jpg'), format='JPEG')
 
 
 def upload_picture(ig_username, ig_password, directory):
     bot = Bot()
     bot.login(username=ig_username, password=ig_password)
-    for image_file in listdir(directory):
-        bot.upload_photo(os.path.join(directory, image_file))
+    for filename in listdir(directory):
+        bot.upload_photo(os.path.join(directory, filename))
         response = bot.api.last_response
         response.raise_for_status()
 

@@ -33,7 +33,6 @@ def load_hubble_collections(directory, HUBBLESITE_API_URL):
     }
     for collection in collections:
         response = requests.get(f'http://hubblesite.org/api/v3/images/{collection}', params=parameters)
-        print(response)
         response.raise_for_status()
         api_response = response.json()
         for image_record in api_response:

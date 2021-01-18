@@ -21,7 +21,7 @@ def fetch_spacex_last_launch(directory, spacex_api_url):
 
 
 def main():
-    directory = os.path.join(DIR_PATH)
+    directory = DIR_PATH
     os.makedirs(directory, exist_ok=True)
     spacex_api_url = SPACEX_API_URL
     try:

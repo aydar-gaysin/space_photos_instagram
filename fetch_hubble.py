@@ -40,7 +40,7 @@ def load_hubble_collections(directory, HUBBLESITE_API_URL):
 
 
 def main():
-    directory = os.path.join(DIR_PATH)
+    directory = DIR_PATH
     os.makedirs(directory, exist_ok=True)
     try:
         load_hubble_collections(directory, HUBBLESITE_API_URL)

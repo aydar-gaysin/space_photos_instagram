@@ -23,9 +23,8 @@ def fetch_spacex_last_launch(directory, spacex_api_url):
 def main():
     directory = DIR_PATH
     os.makedirs(directory, exist_ok=True)
-    spacex_api_url = SPACEX_API_URL
     try:
-        fetch_spacex_last_launch(directory, spacex_api_url)
+        fetch_spacex_last_launch(directory, SPACEX_API_URL)
     except requests.exceptions.HTTPError as error:
         exit('Ошибка:\n{0}'.format(error))
 

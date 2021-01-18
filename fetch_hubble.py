@@ -5,8 +5,8 @@ DIR_PATH = 'images'
 HUBBLESITE_API_URL = 'http://hubblesite.org/api/v3/image/'
 
 
-def fetch_hubble_photo(image_id, directory, HUBBLESITE_API_URL):
-    response = requests.get(f'{HUBBLESITE_API_URL}{image_id}')
+def fetch_hubble_photo(image_id, directory, hubblesite_api_url):
+    response = requests.get(f'{hubblesite_api_url}{image_id}')
     response.raise_for_status()
     api_response = response.json()
     urls = api_response['image_files']
@@ -19,7 +19,7 @@ def fetch_hubble_photo(image_id, directory, HUBBLESITE_API_URL):
         file.write(image_response.content)
 
 
-def load_hubble_collections(directory, HUBBLESITE_API_URL):
+def load_hubble_collections(directory, hubblesite_api_url):
     collections = [
         'spacecraft',
         'news',
@@ -36,7 +36,7 @@ def load_hubble_collections(directory, HUBBLESITE_API_URL):
         response.raise_for_status()
         api_response = response.json()
         for image_record in api_response:
-            fetch_hubble_photo(image_record['id'], directory, HUBBLESITE_API_URL)
+            fetch_hubble_photo(image_record['id'], directory, hubblesite_api_url)
 
 
 def main():

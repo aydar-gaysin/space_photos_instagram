@@ -40,10 +40,9 @@ def load_hubble_collections(directory, hubblesite_api_url):
 
 
 def main():
-    directory = DIR_PATH
-    os.makedirs(directory, exist_ok=True)
+    os.makedirs(DIR_PATH, exist_ok=True)
     try:
-        load_hubble_collections(directory, HUBBLESITE_API_URL)
+        load_hubble_collections(DIR_PATH, HUBBLESITE_API_URL)
     except requests.exceptions.HTTPError as error:
         exit('Ошибка:\n{0}'.format(error))
 
